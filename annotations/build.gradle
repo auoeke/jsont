@@ -1,0 +1,16 @@
+sourceSets {
+    main {
+        java {
+            srcDir("../src/annotations")
+        }
+    }
+}
+
+compileJava {
+    sourceCompatibility = 8
+    targetCompatibility = 8
+}
+
+dependencies {
+    api("user11681:javac-plugin-annotations:latest.release")
+}

@@ -1,0 +1,46 @@
+allprojects {
+    plugins.apply("java-library")
+
+    group = "user11681"
+    version = "0.0.0"
+
+    repositories {
+        mavenCentral()
+
+        maven {url = "https://maven.fabricmc.net"}
+        maven {url = "https://auoeke.jfrog.io/artifactory/maven"}
+    }
+
+    if (path in [":", ":annotations"]) {
+        plugins.apply("maven-publish")
+
+        publishing {
+            repositories {
+                maven {
+                    url = "https://auoeke.jfrog.io/artifactory/maven"
+
+                    credentials {
+                        username = System.properties["maven.username"]
+                        password = System.properties["maven.password"]
+                    }
+                }
+            }
+
+            publications {
+                maven(MavenPublication) {
+                    from(components.java)
+                }
+            }
+        }
+    }
+}
+
+dependencies {
+    api(project(":annotations"))
+
+    api("net.gudenau.lib:unsafe:latest.release")
+    api("user11681:reflect:latest.release")
+    api("user11681:javac-plugin:latest.release")
+    api("com.google.code.gson:gson:latest.release")
+    api("net.fabricmc:fabric-loader:latest.release")
+}

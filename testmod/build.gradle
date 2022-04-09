@@ -1,0 +1,23 @@
+plugins {
+    id("wheel-fabric").version("latest.integration")
+}
+
+sourceSets {
+    main {
+        resources {
+            exclude("fabric.mod.json")
+        }
+    }
+}
+
+compileJava {
+    dependsOn([clean] + project(":").tasks.with {[clean, compileJava]})
+}
+
+dependencies {
+    api(project(":annotations"))
+
+    annotationProcessor(rootProject)
+}
+
+[jar, remapJar, build].forEach {it.enabled = false}
